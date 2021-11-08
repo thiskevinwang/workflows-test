@@ -9,7 +9,7 @@ jobs:
   upload-all:
     runs-on: ubuntu-latest
     strategy:
-      matrix: github.event.client_payload
+      matrix: ${{ github.event.client_payload }}
     steps:
       - name: Run a multi-line script
         run: |
