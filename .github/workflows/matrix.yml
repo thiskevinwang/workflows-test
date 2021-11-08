@@ -9,7 +9,7 @@ jobs:
   upload-all:
     runs-on: ubuntu-latest
     strategy:
-      matrix: ${{ fromJson(github.event.client_payload) }}
+      matrix: "${{ fromJson(github.event.client_payload) }}"
     steps:
       - name: Run a multi-line script
         run: |
