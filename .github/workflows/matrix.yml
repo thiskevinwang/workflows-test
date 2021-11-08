@@ -7,7 +7,6 @@ on:
 
 jobs:
   upload-all:
-    needs: generate-matrix
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJson(github.event.client_payload) }}
