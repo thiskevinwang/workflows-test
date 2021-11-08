@@ -1,0 +1,17 @@
+name: Matrix Upload
+
+on:
+  repository_dispatch:
+    types:
+      - "matrix-upload"
+
+jobs:
+  upload-all:
+    needs: generate-matrix
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{ fromJson(github.event.client_payload) }}
+    steps:
+      - name: Run a multi-line script
+        run: |
+          echo ${{ matrix }}
