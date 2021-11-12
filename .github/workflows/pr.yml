@@ -10,5 +10,5 @@ jobs:
     name: Cherry pick to random branch
     steps:
     - run: |
-      echo "I merged"
-      echo "${{ github.event.number }}"
+        echo "I merged"
+        echo "${{ github.event.number }}"
