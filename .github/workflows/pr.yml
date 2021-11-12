@@ -10,5 +10,5 @@ jobs:
     name: PR ${{ github.event.number }} was merged
     steps:
     - run: |
-      echo "I merged"
-      echo "${{ github.event.number }}"
+        echo "I merged"
+        echo "${{ github.event.number }}"
