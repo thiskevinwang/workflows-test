@@ -1,0 +1,14 @@
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  echo_if_merged:
+    if: github.event.pull_request.merged
+    runs-on: ubuntu-latest
+    name: Cherry pick to random branch
+    steps:
+    - run: |
+      echo "I merged"
+      echo ${{ github.event.number }}
