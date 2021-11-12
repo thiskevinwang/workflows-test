@@ -7,8 +7,8 @@ jobs:
   echo_if_merged:
     if: github.event.pull_request.merged
     runs-on: ubuntu-latest
-    name: Cherry pick to random branch
+    name: PR ${{ github.event.number }} was merged
     steps:
     - run: |
-        echo "I merged"
-        echo "${{ github.event.number }}"
+      echo "I merged"
+      echo "${{ github.event.number }}"
