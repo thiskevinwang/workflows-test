@@ -11,4 +11,4 @@ jobs:
     steps:
     - run: |
       echo "I merged"
-      echo ${{ github.event.number }}
+      echo "${{ github.event.number }}"
