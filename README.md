@@ -2,4 +2,4 @@
 
 Test
 
-(You can add “askfjhlaksj” to the readme)
+[foo](./some-module-test/README.md)
