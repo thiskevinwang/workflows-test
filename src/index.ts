@@ -32,6 +32,9 @@ const main = async () => {
     await sleep(30);
   }
 
+  // It appears that the spinner is hidden in github actions
+  // This is good, but _how_ is this achieved?
+  // https://github.com/thiskevinwang/workflows-test/runs/5120955325?check_suite_focus=true
   const spinner = ora("Loading...");
   spinner.start();
   await sleep(1000);
