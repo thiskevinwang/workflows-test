@@ -40,22 +40,21 @@ const rl = readline.createInterface({
 });
 // print incrementing progress on a single line
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
-    rl.on("SIGINT", () => {
-        var _a;
-        if (((_a = process.listenerCount) === null || _a === void 0 ? void 0 : _a.call(process, "SIGINT")) === 0) {
-            // @ts-ignore
-            process.emit("SIGINT");
-        }
-        else {
-            rl.close();
-            process.kill(process.pid, "SIGINT");
-        }
-    });
+    // rl.on("SIGINT", () => {
+    //   if (process.listenerCount?.("SIGINT") === 0) {
+    //     // @ts-ignore
+    //     process.emit("SIGINT");
+    //   } else {
+    //     rl.close();
+    //     process.kill(process.pid, "SIGINT");
+    //   }
+    // });
     for (let i = 0; i < 101; i++) {
-        rl.write(`${i}%`);
+        // rl.write(`${i}%`);
         readline.cursorTo(process.stdout, 0);
+        process.stdout.write(`${i}%`);
         yield sleep(50);
     }
-    return;
+    process.exit(0);
 });
 main();

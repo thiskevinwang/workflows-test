@@ -13,22 +13,23 @@ const rl = readline.createInterface({
 
 // print incrementing progress on a single line
 const main = async () => {
-  rl.on("SIGINT", () => {
-    if (process.listenerCount?.("SIGINT") === 0) {
-      // @ts-ignore
-      process.emit("SIGINT");
-    } else {
-      rl.close();
-      process.kill(process.pid, "SIGINT");
-    }
-  });
+  // rl.on("SIGINT", () => {
+  //   if (process.listenerCount?.("SIGINT") === 0) {
+  //     // @ts-ignore
+  //     process.emit("SIGINT");
+  //   } else {
+  //     rl.close();
+  //     process.kill(process.pid, "SIGINT");
+  //   }
+  // });
 
   for (let i = 0; i < 101; i++) {
-    rl.write(`${i}%`);
+    // rl.write(`${i}%`);
     readline.cursorTo(process.stdout, 0);
+    process.stdout.write(`${i}%`);
     await sleep(50);
   }
-  return;
+  process.exit(0);
 };
 
 main();
