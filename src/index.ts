@@ -26,6 +26,7 @@ const main = async () => {
   for (let i = 0; i < 101; i++) {
     // rl.write(`${i}%`);
     readline.cursorTo(process.stdout, 0);
+    readline.clearLine(process.stdout, 0);
     process.stdout.write(`${i}%`);
     await sleep(50);
   }

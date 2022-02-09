@@ -52,6 +52,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     for (let i = 0; i < 101; i++) {
         // rl.write(`${i}%`);
         readline.cursorTo(process.stdout, 0);
+        readline.clearLine(process.stdout, 0);
         process.stdout.write(`${i}%`);
         yield sleep(50);
     }
