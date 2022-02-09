@@ -7,14 +7,24 @@ const sleep = (ms: number) => {
 
 const rl = readline.createInterface({
   input: process.stdin,
-  output: process.stdout,
+  output: process.stderr,
 });
 
 // print incrementing progress on a single line
 const main = async () => {
+  rl.on("SIGINT", () => {
+    if (process.listenerCount?.("SIGINT") === 0) {
+      // @ts-ignore
+      process.emit("SIGINT");
+    } else {
+      rl.close();
+      process.kill(process.pid, "SIGINT");
+    }
+  });
+
   for (let i = 0; i < 101; i++) {
-    readline.cursorTo(process.stdout, 0, 0);
-    process.stdout.write(`Progress: ${i}%`);
+    rl.write(`${i}%`);
+    readline.cursorTo(process.stderr, 0);
     await sleep(50);
   }
   return;
