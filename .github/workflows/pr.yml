@@ -2,6 +2,9 @@ on:
   pull_request:
     types:
       - closed
+  push:
+    branches:
+      - main
 
 jobs:
   echo_if_merged:
@@ -9,6 +12,15 @@ jobs:
     runs-on: ubuntu-latest
     name: PR ${{ github.event.number }} was merged
     steps:
-    - run: |
-        echo "I merged"
-        echo "${{ github.event.number }}"
+      - run: |
+          echo "I merged"
+          echo "${{ github.event.number }}"
+  print_progress:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+          cache: "npm"
+      - run: node src/index.js
