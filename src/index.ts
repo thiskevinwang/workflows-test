@@ -1,5 +1,6 @@
 import * as readline from "readline";
 import * as process from "process";
+import ora from "ora";
 
 const sleep = (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -28,8 +29,14 @@ const main = async () => {
     readline.cursorTo(process.stdout, 0);
     readline.clearLine(process.stdout, 0);
     process.stdout.write(`${i}%`);
-    await sleep(50);
+    await sleep(30);
   }
+
+  const spinner = ora("Loading...");
+  spinner.start();
+  await sleep(1000);
+  spinner.succeed("Done");
+
   process.exit(0);
 };
 
