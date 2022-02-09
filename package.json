@@ -1,0 +1,21 @@
+{
+  "name": "workflows-test",
+  "version": "1.0.0",
+  "description": "Test",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thiskevinwang/workflows-test.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thiskevinwang/workflows-test/issues"
+  },
+  "homepage": "https://github.com/thiskevinwang/workflows-test#readme"
+}
