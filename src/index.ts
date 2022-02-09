@@ -7,7 +7,8 @@ const sleep = (ms: number) => {
 
 const rl = readline.createInterface({
   input: process.stdin,
-  output: process.stderr,
+  // stderr simply doesn't log anything in github actions
+  output: process.stdout,
 });
 
 // print incrementing progress on a single line
@@ -24,7 +25,7 @@ const main = async () => {
 
   for (let i = 0; i < 101; i++) {
     rl.write(`${i}%`);
-    readline.cursorTo(process.stderr, 0);
+    readline.cursorTo(process.stdout, 0);
     await sleep(50);
   }
   return;
