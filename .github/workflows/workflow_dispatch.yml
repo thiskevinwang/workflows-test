@@ -1,0 +1,20 @@
+on:
+  workflow_dispatch:
+    inputs:
+      log_level:
+        description: 'log level'
+        required: false
+
+jobs:
+  upload-all:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+          cache: 'npm'
+      - run: npm install
+      - run: npm run log
