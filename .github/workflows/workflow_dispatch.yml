@@ -20,7 +20,7 @@ on:
         required: false
 
 jobs:
-  upload-all:
+  log:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
