@@ -1,20 +1,11 @@
+name: Pretty Log
+
 on:
   workflow_dispatch:
     inputs:
       log_level:
-        description: 'log level'
-        required: false
-      environment:
-        type: environment
-        description: Select the environment
-        required: false
-      boolean:
-        type: boolean
-        description: True or False
-        required: false
-      choice:
         type: choice
-        description: Make a choice
+        description: Log level
         required: false
         options:
         - trace
@@ -23,6 +14,10 @@ on:
         - warn
         - error
         - fatal
+      dry_run:
+        type: boolean
+        description: True or False
+        required: false
 
 jobs:
   upload-all:
