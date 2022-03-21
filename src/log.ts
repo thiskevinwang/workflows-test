@@ -1,7 +1,7 @@
 import * as core from "@actions/core";
 import pino from "pino";
 
-const log_level = core.getInput("log_level") || "info";
+const log_level = core.getInput("log_level") || "trace";
 
 function main() {
   const logger = pino({
@@ -13,6 +13,9 @@ function main() {
       },
     },
   });
+
+  logger.info(log_level);
+  logger.info(logger.level);
 
   logger.trace("This is a trace message");
   logger.debug("This is a debug message");

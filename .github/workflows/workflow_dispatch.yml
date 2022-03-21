@@ -4,6 +4,25 @@ on:
       log_level:
         description: 'log level'
         required: false
+      environment:
+        type: environment
+        description: Select the environment
+        required: false
+      boolean:
+        type: boolean
+        description: True or False
+        required: false
+      choice:
+        type: choice
+        description: Make a choice
+        required: false
+        options:
+        - trace
+        - debug
+        - info
+        - warn
+        - error
+        - fatal
 
 jobs:
   upload-all:
