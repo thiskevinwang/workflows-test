@@ -16,7 +16,7 @@ on:
         - fatal
       dry_run:
         type: boolean
-        description: True or False
+        description: Dry run?
         required: false
 
 jobs:
