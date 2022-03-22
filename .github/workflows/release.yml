@@ -13,9 +13,6 @@ jobs:
         id: set_tag
         run: echo ::set-output name=tag::${GITHUB_REF#refs/*/v}
       - name: PR Time
-        # Warn: despite what the docs say, `gh auth login` does not
-        # accept any args
-# gh auth login
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | gh auth login --with-token
           git checkout -b tmp-$GITHUB_SHA
