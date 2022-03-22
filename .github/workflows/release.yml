@@ -14,9 +14,8 @@ jobs:
         run: echo ::set-output name=tag::${GITHUB_REF#refs/*/v}
       - name: PR Time
         run: |
-          hash=$(echo $(date +'%s') | shasum -a 256 |  cut -c -8)
           gh auth login --with-token ${{ secrets.GITHUB_TOKEN }}
-          git checkout -b tmp-$hash
+          git checkout -b tmp-$GITHUB_SHA
           git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)
           echo "test" >> test.md
           git add .
