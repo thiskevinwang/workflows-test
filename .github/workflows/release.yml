@@ -13,14 +13,16 @@ jobs:
         id: set_tag
         run: echo ::set-output name=tag::${GITHUB_REF#refs/*/v}
       - name: PR Time
+        # Warn: despite what the docs say, `gh auth login` does not
+        # accept any args
         run: |
           gh auth login
-# git checkout -b tmp-$GITHUB_SHA
-# git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)
-# echo "test" >> test.md
-# git add .
-# git commit -s -m "ci: auto commit"
-# gh pr create -B main -t ${{ steps.set_tag.outputs.tag }} -b ${{ steps.set_tag.outputs.tag }} --fill -H $(git rev-parse --abbrev-ref HEAD)
-# gh pr edit --add-reviewer thiskevinwang
-# gh pr edit --body "$(gh release view v${{ steps.set_tag.outputs.tag }} --json body --jq '.body')"
+          git checkout -b tmp-$GITHUB_SHA
+          git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)
+          echo "test" >> test.md
+          git add .
+          git commit -s -m "ci: auto commit"
+          gh pr create -B main -t ${{ steps.set_tag.outputs.tag }} -b ${{ steps.set_tag.outputs.tag }} --fill -H $(git rev-parse --abbrev-ref HEAD)
+          gh pr edit --add-reviewer thiskevinwang
+          gh pr edit --body "$(gh release view v${{ steps.set_tag.outputs.tag }} --json body --jq '.body')"
           
