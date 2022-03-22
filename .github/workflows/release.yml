@@ -25,7 +25,7 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git commit -s -m "ci: auto commit"
-          gh pr create -B main -t ${{ steps.set_tag.outputs.tag }} -b ${{ steps.set_tag.outputs.tag }} --fill -H $(git rev-parse --abbrev-ref HEAD)
+          gh pr create -B main -t ${{ steps.set_tag.outputs.tag }} -b ${{ steps.set_tag.outputs.tag }} -H $(git rev-parse --abbrev-ref HEAD)
           gh pr edit --add-reviewer thiskevinwang
           gh pr edit --body "$(gh release view v${{ steps.set_tag.outputs.tag }} --json body --jq '.body')"
           
