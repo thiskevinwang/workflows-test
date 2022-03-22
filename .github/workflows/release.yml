@@ -22,6 +22,8 @@ jobs:
           git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)
           echo "test" >> test.md
           git add .
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
           git commit -s -m "ci: auto commit"
           gh pr create -B main -t ${{ steps.set_tag.outputs.tag }} -b ${{ steps.set_tag.outputs.tag }} --fill -H $(git rev-parse --abbrev-ref HEAD)
           gh pr edit --add-reviewer thiskevinwang
