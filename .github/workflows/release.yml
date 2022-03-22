@@ -15,7 +15,7 @@ jobs:
       - name: PR Time
         run: |
           gh auth login --with-token ${{ secrets.GITHUB_TOKEN }}
-          git checkout -b tmp-$GITHUB_SHA
+# git checkout -b tmp-$GITHUB_SHA
 # git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)
 # echo "test" >> test.md
 # git add .
