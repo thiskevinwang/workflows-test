@@ -22,4 +22,5 @@ jobs:
           git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)
           gh pr create -B main -t ${{ steps.set_tag.outputs.tag }} -b ${{ steps.set_tag.outputs.tag }} "--fill -H $(git rev-parse --abbrev-ref HEAD)
           gh pr edit --add-reviewer brkalow
+          gh pr edit --body "$(gh release view v${{ steps.set_tag.outputs.tag }} --json body --jq '.body')"
           
