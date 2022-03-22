@@ -12,11 +12,14 @@ jobs:
       - name: Set tag
         id: set_tag
         run: echo ::set-output name=tag::${GITHUB_REF#refs/*/v}
+      - uses: oleksiyrudenko/gha-git-credentials@v2-latest
+        with:
+          token: '${{ secrets.GITHUB_TOKEN }}'
       - name: PR Time
         # Warn: despite what the docs say, `gh auth login` does not
         # accept any args
+# gh auth login
         run: |
-          gh auth login
           git checkout -b tmp-$GITHUB_SHA
           git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)
           echo "test" >> test.md
