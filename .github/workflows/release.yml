@@ -15,6 +15,7 @@ jobs:
       - name: PR Time
         run: |
           hash=$(echo $(date +'%s') | shasum -a 256 |  cut -c -8)
+          gh auth login --with-token ${{ secrets.GITHUB_TOKEN }}
           git checkout -b tmp-$hash
           echo "test" >> test.md
           git add .
