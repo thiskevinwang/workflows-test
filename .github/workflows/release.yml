@@ -14,7 +14,7 @@ jobs:
         run: echo ::set-output name=tag::${GITHUB_REF#refs/*/v}
       - name: PR Time
         run: |
-          gh auth login --with-token ${{ secrets.GITHUB_TOKEN }}
+          gh auth login
 # git checkout -b tmp-$GITHUB_SHA
 # git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)
 # echo "test" >> test.md
