@@ -19,12 +19,12 @@ jobs:
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | gh auth login --with-token
           git checkout -b tmp-$GITHUB_SHA
-          git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)
           echo "test" >> test.md
           git add .
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git commit -s -m "ci: auto commit"
+          git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)
           gh pr create -B main -t ${{ steps.set_tag.outputs.tag }} -b ${{ steps.set_tag.outputs.tag }} -H $(git rev-parse --abbrev-ref HEAD)
           gh pr edit --add-reviewer thiskevinwang
           gh pr edit --body "$(gh release view v${{ steps.set_tag.outputs.tag }} --json body --jq '.body')"
