@@ -16,7 +16,7 @@ jobs:
         run: |
           hash=$(echo $(date +'%s') | shasum -a 256 |  cut -c -8)
           git checkout -b tmp-$hash
-          echo "test" >>> test.md
+          echo "test" >> test.md
           git add .
           git commit -s -m "ci: auto commit"
           git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)
