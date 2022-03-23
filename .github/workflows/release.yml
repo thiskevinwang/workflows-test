@@ -14,15 +14,20 @@ jobs:
         run: echo ::set-output name=tag::${GITHUB_REF#refs/*/v}
       - name: PR Time
         run: |
+          HASH=$(echo $(date +'%s') | shasum -a 256 |  cut -c -8)
           echo ${{ secrets.GITHUB_TOKEN }} | gh auth login --with-token
-          git checkout -b tmp-$GITHUB_SHA
-          echo "test" >> test.md
+          git checkout -b tmp-$HASH
           git add .
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git commit -s -m "ci: auto commit"
           git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)
-          gh pr create -B main -t ${{ steps.set_tag.outputs.tag }} -b ${{ steps.set_tag.outputs.tag }} -H $(git rev-parse --abbrev-ref HEAD)
-          gh pr edit --add-reviewer thiskevinwang
-          gh pr edit --body "$(gh release view v${{ steps.set_tag.outputs.tag }} --json body --jq '.body')"
+          RELEASE_BODY=$(gh release view v${{ steps.set_tag.outputs.tag }} --json body --jq '.body')
+          RELEASE_BODY="$RELEASE_CONTENT\n\n---\n\nThis PR was auto-generated"
+          gh pr create \
+            -B main \
+            -H $(git rev-parse --abbrev-ref HEAD) \
+            -t "🤖 ${{ steps.set_tag.outputs.tag }}" \
+            -b $RELEASE_BODY \
+            -r thiskevinwang
           
