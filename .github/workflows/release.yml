@@ -14,8 +14,10 @@ jobs:
         run: echo ::set-output name=tag::${GITHUB_REF#refs/*/v}
       - name: PR Time
         run: |
+          HASH=$(echo $(date +'%s') | shasum -a 256 |  cut -c -8)
           echo ${{ secrets.GITHUB_TOKEN }} | gh auth login --with-token
-          git checkout -b tmp-$(echo $GITHUB_SHA | cut -c -8)
+          git checkout -b tmp-$HASH
+          echo "# \`$HASH\`" >> test.md
           git add .
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
