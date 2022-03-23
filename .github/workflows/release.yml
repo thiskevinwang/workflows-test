@@ -17,7 +17,7 @@ jobs:
           HASH=$(echo $(date +'%s') | shasum -a 256 |  cut -c -8)
           echo ${{ secrets.GITHUB_TOKEN }} | gh auth login --with-token
           git checkout -b tmp-$HASH
-          echo "# \`$HASH\`" >> test.md
+          sed -i '.txt' "/Production/,// s/\(amazonaws.com\/[a-z\-]*:\)[0-9.]*/\1${{ steps.set_tag.outputs.tag }}/g" test.hcl
           git add .
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
