@@ -24,7 +24,7 @@ jobs:
           git commit -s -m "ci: auto commit"
           git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)
           RELEASE_BODY=$(gh release view v${{ steps.set_tag.outputs.tag }} --json body --jq '.body')
-          RELEASE_BODY="$RELEASE_CONTENT\n\n---\n\nThis PR was auto-generated"
+          RELEASE_BODY="$RELEASE_BODY\n\n---\n\nThis PR was auto-generated"
           gh pr create \
             -B main \
             -H $(git rev-parse --abbrev-ref HEAD) \
