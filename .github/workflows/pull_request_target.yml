@@ -25,6 +25,7 @@ jobs:
           echo ${GITHUB_ACTIONS}
           echo ${GITHUB_REF}
           echo ${GITHUB_REF_NAME}
+          echo github.head_ref is ${{github.head_ref}}
           echo "DB_NAME=${GITHUB_REF//[^a-zA-Z-0-9\s:]/_}"
           echo "DB_NAME=${GITHUB_REF//[^a-zA-Z-0-9\s:]/_}" >> $GITHUB_ENV
           echo "DB_NAME is: ${{ env.DB_NAME }}"
