@@ -18,6 +18,7 @@ echo "IMAGE_URI:   ${IMAGE_URI}"
 echo "==========================="
 
 
+echo "Creating lambda function"
 # aws lambda create-function --package-type Image --function-name $LAMBDA_NAME --code ImageUri=$IMAGE_URI
 aws lambda create-function \
     --package-type Image \
