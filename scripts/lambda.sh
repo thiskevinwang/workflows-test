@@ -18,23 +18,6 @@ echo "IMAGE_URI:   ${IMAGE_URI}"
 echo "==========================="
 
 
-# first try to grab a pre-existing function URL.
-# if it exists, early exit
-gfuc_res=$(aws lambda get-function-url-config \
-    --function-name ${LAMBDA_NAME} \
-    --qualifier ${ALIAS_NAME} | jq)
-if [ $? -eq 0 ]; then
-    echo "🟢 Function already exists, exiting"
-    function_url=$(echo "${gfuc_res}" | jq -r '.FunctionUrl')
-    # set output for GitHub actions
-    echo "::set-output name=FUNCTION_URL::$function_url"
-    echo ""
-    exit 0
-fi
-
-# No URL found...
-# Proceed through whole lambda process
-
 # aws lambda create-function --package-type Image --function-name $LAMBDA_NAME --code ImageUri=$IMAGE_URI
 aws lambda create-function \
     --package-type Image \
