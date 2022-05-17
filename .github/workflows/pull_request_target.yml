@@ -39,3 +39,4 @@ jobs:
         id: verify
         run: |
           echo "FUNCTION_URL is: ${{ steps.url.outputs.FUNCTION_URL }}"
+          echo "::notice::FUNCTION_URL is: ${{ steps.url.outputs.FUNCTION_URL }}"
