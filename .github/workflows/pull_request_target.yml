@@ -1,0 +1,22 @@
+# act pull_request_target -W ./.github/workflows/pull_request_target.yml
+name: "pull_request_target"
+on:
+  pull_request_target:
+
+jobs:
+  echo:
+    runs-on: ubuntu-latest
+    # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-a-warning-message
+    steps:
+      # https://docs.github.com/en/actions/learn-github-actions/contexts#about-contexts
+      # https://docs.github.com/en/actions/learn-github-actions/environment-variables#default-environment-variables
+      - run: |
+          echo "::notice::Hello world!"
+          echo ${{ github.sha }}
+          echo ${GITHUB_SHA:0:7}
+          echo ${GITHUB_ACTIONS}
+          echo ${GITHUB_REF}
+          echo ${GITHUB_REF_NAME}
+          echo "DB_NAME=${GITHUB_REF//[^a-zA-Z-0-9\s:]/_}"
+          echo "DB_NAME=${GITHUB_REF//[^a-zA-Z-0-9\s:]/_}" >> $GITHUB_ENV
+          echo ${DB_NAME}
