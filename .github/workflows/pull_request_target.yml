@@ -21,3 +21,14 @@ jobs:
           echo "DB_NAME=${GITHUB_REF//[^a-zA-Z-0-9\s:]/_}"
           echo "DB_NAME=${GITHUB_REF//[^a-zA-Z-0-9\s:]/_}" >> $GITHUB_ENV
           echo "DB_NAME is: ${{ env.DB_NAME }}"
+      - #
+        name: Create lambda function URL
+        id: url
+        run: |
+          echo "DB_NAME is: ${{ env.DB_NAME }}"
+          ./scripts/lambda.sh ${{ env.DB_NAME }}
+      - # check FUNCTION_URL output from previous step
+        name: Verify function URL
+        id: verify
+        run: |
+          echo "FUNCTION_URL is: ${{ steps.url.outputs.FUNCTION_URL }}"
