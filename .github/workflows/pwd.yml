@@ -11,7 +11,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: ${{ github.repository }}
-          path: ../foo
+          path: ./foo
       - name: Clone repo 2
         uses: actions/checkout@v3
         with:
@@ -26,7 +26,7 @@ jobs:
           echo "**GITHUB_WORKSPACE**: $GITHUB_WORKSPACE" >> $GITHUB_STEP_SUMMARY
           echo "1. $(pwd)" >> $GITHUB_STEP_SUMMARY
       - run: echo "2. $(pwd)" >> $GITHUB_STEP_SUMMARY
-        working-directory: ../foo
+        working-directory: ../
       - run: echo "3. $(pwd)" >> $GITHUB_STEP_SUMMARY
         working-directory: ./bar
       - run: echo "4. $(pwd)" >> $GITHUB_STEP_SUMMARY
