@@ -1,0 +1,33 @@
+name: Print working directory
+
+on:
+  workflow_dispatch:
+jobs:
+  my-job:
+    name: Clone repos
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone this repo
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ github.repository }}
+          path: foo
+      - name: Clone repo 2
+        uses: actions/checkout@v3
+        with:
+          repository: thiskevinwang/workflows-test
+          path: bar
+      - name: Clone repo 3
+        uses: actions/checkout@v3
+        with:
+          repository: thiskevinwang/workflows-test
+          path: baz
+      - run: |
+          echo "**GITHUB_WORKSPACE**: $GITHUB_WORKSPACE" >> $GITHUB_STEP_SUMMARY
+          echo "1. $(pwd)" >> $GITHUB_STEP_SUMMARY
+      - run: echo "2. $(pwd)" >> $GITHUB_STEP_SUMMARY
+        working-directory: ./foo
+      - run: echo "3. $(pwd)" >> $GITHUB_STEP_SUMMARY
+        working-directory: ./bar
+      - run: echo "4. $(pwd)" >> $GITHUB_STEP_SUMMARY
+        working-directory: baz
