@@ -1,6 +1,7 @@
 name: Input Mapping Example
 
 on:
+  # noop comment
   pull_request_target:
     branches:
       - main
