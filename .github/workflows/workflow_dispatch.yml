@@ -51,12 +51,16 @@ jobs:
       - run: |
           echo "ACTION=${{env.pr_action}}" >> $GITHUB_ENV
           echo "AUTHOR=${{env.pr_author}}" >> $GITHUB_ENV
+          echo "### `map_inputs`"          >> $GITHUB_STEP_SUMMARY
+          echo "ACTION=${{env.pr_action}}" >> $GITHUB_STEP_SUMMARY
+          echo "AUTHOR=${{env.pr_author}}" >> $GITHUB_STEP_SUMMARY
+          echo ""                          >> $GITHUB_STEP_SUMMARY
   summary:
     needs: map_inputs
     runs-on: ubuntu-latest
     steps:
       - run: |
-          echo "### Input Mapping"                                              >> $GITHUB_STEP_SUMMARY
+          echo "### `summary`"                                                  >> $GITHUB_STEP_SUMMARY
           echo ""                                                               >> $GITHUB_STEP_SUMMARY
           echo "**env.ACTION**: ${{env.ACTION}}"                                >> $GITHUB_STEP_SUMMARY
           echo "**env.AUTHOR**: ${{env.AUTHOR}}"                                >> $GITHUB_STEP_SUMMARY
