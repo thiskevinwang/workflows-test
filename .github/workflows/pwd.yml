@@ -5,7 +5,7 @@ on:
 env:
   # DRY_RUN: true
   # DRY_RUN: ${{ github.ref_name == github.event.repository.default_branch }}
-  DRY_RUN: ${{ github.ref_name == github.event.repository.default_branch && "1" || "0" }}
+  DRY_RUN: ${{ github.ref_name == github.event.repository.default_branch && '1' || '0' }}
 jobs:
   my-job:
     name: Clone repos
