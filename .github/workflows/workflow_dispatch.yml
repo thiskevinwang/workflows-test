@@ -1,34 +1,69 @@
-name: Pretty Log
+name: Input Mapping Example
 
 on:
+  pull_request_target:
+    branches:
+      - main
   workflow_dispatch:
     inputs:
-      log_level:
+      action:
         type: choice
-        description: Log level
-        required: false
+        description: The pull request action
+        required: true
         options:
-        - trace
-        - debug
-        - info
-        - warn
-        - error
-        - fatal
+          - assigned
+          - auto_merge_disabled
+          - auto_merge_enabled
+          - closed
+          - converted_to_draft
+          - edited
+          - labeled
+          - locked
+          - opened
+          - ready_for_review
+          - reopened
+          - review_request_removed
+          - review_requested
+          - synchronize
+          - unassigned
+          - synchronize
+          - unlabeled
+          - unlocked
+      author:
+        type: string
+        required: true
+        description: The pull request author
       dry_run:
         type: boolean
         description: Dry run?
         required: false
 
 jobs:
-  log:
+  map_inputs:
+    runs-on: ubuntu-latest
+    env:
+      pr_action: ${{ github.event.action                  || inputs.action }}
+      pr_author: ${{ github.event.pull_request.user.login || inputs.author }}
+    outputs:
+      pr_action: ${{ github.event.action                  || inputs.action }}
+      pr_author: ${{ github.event.pull_request.user.login || inputs.author }}
+    steps:
+      - run: |
+          echo "ACTION=${{env.pr_action}}" >> $GITHUB_ENV
+          echo "AUTHOR=${{env.pr_author}}" >> $GITHUB_ENV
+          echo "### \`map_inputs\`"          >> $GITHUB_STEP_SUMMARY
+          echo "ACTION=${{env.pr_action}}" >> $GITHUB_STEP_SUMMARY
+          echo "AUTHOR=${{env.pr_author}}" >> $GITHUB_STEP_SUMMARY
+          echo ""                          >> $GITHUB_STEP_SUMMARY
+  summary:
+    needs: map_inputs
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Setup Node
-        uses: actions/setup-node@v2
-        with:
-          node-version: "14"
-          cache: 'npm'
-      - run: npm install
-      - run: npm run log
+      - run: |
+          echo "### \`summary\`"                                                  >> $GITHUB_STEP_SUMMARY
+          echo ""                                                               >> $GITHUB_STEP_SUMMARY
+          echo "**env.ACTION**: ${{env.ACTION}}"                                >> $GITHUB_STEP_SUMMARY
+          echo "**env.AUTHOR**: ${{env.AUTHOR}}"                                >> $GITHUB_STEP_SUMMARY
+          echo ""                                                               >> $GITHUB_STEP_SUMMARY
+          echo "**outputs.pr_action**: ${{needs.map_inputs.outputs.pr_action}}" >> $GITHUB_STEP_SUMMARY
+          echo "**outputs.pr_author**: ${{needs.map_inputs.outputs.pr_author}}" >> $GITHUB_STEP_SUMMARY

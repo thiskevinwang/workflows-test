@@ -1,0 +1,43 @@
+# act pull_request_target -W ./.github/workflows/pull_request_target.yml
+name: "pull_request_target"
+on:
+  # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request_target
+  pull_request_target:
+
+jobs:
+  echo:
+    runs-on: ubuntu-latest
+    # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-a-warning-message
+    steps:
+      - uses: actions/checkout@v3
+      - name: Configure AWS credentials from Test account
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      # https://docs.github.com/en/actions/learn-github-actions/contexts#about-contexts
+      # https://docs.github.com/en/actions/learn-github-actions/environment-variables#default-environment-variables
+      - run: |
+          echo "::notice::Hello world!"
+          echo ${{ github.sha }}
+          echo ${GITHUB_SHA:0:7}
+          echo ${GITHUB_ACTIONS}
+          echo ${GITHUB_REF}
+          echo ${GITHUB_REF_NAME}
+          echo github.head_ref is ${{github.head_ref}}
+          echo "DB_NAME=${GITHUB_REF//[^a-zA-Z-0-9\s:]/_}"
+          echo "DB_NAME=${GITHUB_REF//[^a-zA-Z-0-9\s:]/_}" >> $GITHUB_ENV
+          echo "DB_NAME is: ${{ env.DB_NAME }}"
+      - #
+        name: Create lambda function URL
+        id: url
+        run: |
+          echo "DB_NAME is: ${{ env.DB_NAME }}"
+          ./scripts/lambda.sh ${{ env.DB_NAME }}
+      - # check FUNCTION_URL output from previous step
+        name: Verify function URL
+        id: verify
+        run: |
+          echo "FUNCTION_URL is: ${{ steps.url.outputs.FUNCTION_URL }}"
+          echo "::notice::FUNCTION_URL is: ${{ steps.url.outputs.FUNCTION_URL }}"
