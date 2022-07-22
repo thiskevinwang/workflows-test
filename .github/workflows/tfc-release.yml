@@ -21,7 +21,7 @@ jobs:
     steps:
       - name: Validate changelog branch
         run: |
-          if [[ ${{ github.ref_name }} =~ ^tfc-agent-changelog/[0-9]+\.[0-9]+\[0-9]+$ ]]
+          if [[ ${{ github.head_ref }} =~ ^tfc-agent-changelog/[0-9]+\.[0-9]+\[0-9]+$ ]]
           then
             echo "::notice::Branch is valid — ${{ github.ref_name }}"
           else
