@@ -1,0 +1,37 @@
+# This workflow publishes a GitHub release when
+# a branch with a particular pattern & version
+# is merged.
+# - ex. tfc-agent-changelog/1.2.6
+name: Publish Release on changelog branch merge
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+    # paths:
+    #   - website/docs/cloud-docs/agents/changelog.mdx
+
+jobs:
+  publish_release:
+    name: Publish Release
+    # only run if PR is merged
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate changelog branch
+        run: |
+          if [[ ${{ github.ref_name }} =~ ^tfc-agent-changelog/[0-9]+\.[0-9]+\[0-9]+$ ]]
+          then
+            echo "::notice::Branch is valid — ${{ github.ref_name }}"
+          else
+            echo "::error::Branch is invalid — ${{ github.ref_name }}"
+            exit 1
+          fi
+      - name: Get version from branch name
+        run: |
+          version=${GITHUB_REF_NAME#tfc-agent-changelog/}
+          echo "VERSION=$version" >> $GITHUB_ENV
+      - name: Publish release
+        run: |
+          gh release create v${{env.VERSION}} --generate-notes
