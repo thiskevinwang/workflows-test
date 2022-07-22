@@ -12,6 +12,10 @@ on:
     # paths:
     #   - website/docs/cloud-docs/agents/changelog.mdx
 
+env:
+  # the branch name of the PR
+  HEAD_REF: ${{ github.head_ref }}
+
 jobs:
   publish_release:
     name: Publish Release
@@ -21,16 +25,16 @@ jobs:
     steps:
       - name: Validate changelog branch
         run: |
-          if [[ ${{ github.head_ref }} =~ ^tfc-agent-changelog/[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          if [[ $HEAD_REF =~ ^tfc-agent-changelog/[0-9]+\.[0-9]+\.[0-9]+$ ]]
           then
-            echo "::notice::Branch is valid — ${{ github.head_ref }}"
+            echo "::notice::Branch is valid — $HEAD_REF"
           else
-            echo "::error::Branch is invalid — ${{ github.head_ref }}"
+            echo "::error::Branch is invalid — $HEAD_REF"
             exit 1
           fi
       - name: Get version from branch name
         run: |
-          version=${GITHUB_REF_NAME#tfc-agent-changelog/}
+          version=${HEAD_REF#tfc-agent-changelog/}
           echo "VERSION=$version" >> $GITHUB_ENV
       - name: Checkout repository
         uses: actions/checkout@v3
