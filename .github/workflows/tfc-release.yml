@@ -33,5 +33,7 @@ jobs:
           version=${GITHUB_REF_NAME#tfc-agent-changelog/}
           echo "VERSION=$version" >> $GITHUB_ENV
       - name: Publish release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh release create v${{env.VERSION}} --generate-notes
