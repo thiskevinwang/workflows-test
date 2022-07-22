@@ -43,3 +43,8 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh release create v${{env.VERSION}} --generate-notes
+      - name: Summary
+        run: |
+          echo "# Summary"                         >> $GITHUB_STEP_SUMMARY
+          echo "**Originating Branch**: $HEAD_REF" >> $GITHUB_STEP_SUMMARY
+          echo "**Version**: v${{env.VERSION}}"    >> $GITHUB_STEP_SUMMARY
