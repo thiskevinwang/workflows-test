@@ -8,6 +8,8 @@ on:
       - reopened
     branches:
       - main
+    paths:
+      - "website/**"
 
 jobs:
   check-for-tfc-docs-changes:
@@ -34,3 +36,18 @@ jobs:
     steps:
       - name: Echo if failed
         run: echo "TFC Docs changed"
+      - name: Create comment
+        uses: peter-evans/create-or-update-comment@v2
+        with:
+          issue-number: ${{ github.event.number }}
+          body: |
+            > **Warning**: TFC Docs changed
+            >
+            > This PR contains changes to documentation files that
+            > originate from [terraform-docs-common](https://github.com/hashicorp/terraform-docs-common). These
+            > files contain a frontmatter field, `tfc_only: true`.
+            >
+            > These files are not meant to be edited directly.
+            >
+            > Any modifications should ideally be made in [terraform-docs-common](https://github.com/hashicorp/terraform-docs-common). If they 
+            > absolutely must be made here, please make sure open an equivalent PR in the original repository,
