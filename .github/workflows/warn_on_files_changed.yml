@@ -34,11 +34,9 @@ jobs:
     steps:
       - name: Echo if failed
         run: echo "TFC Docs changed"
-      - name: Create comment
-        uses: peter-evans/create-or-update-comment@v2
+      - uses: marocchino/sticky-pull-request-comment@v2
         with:
-          issue-number: ${{ github.event.number }}
-          body: |
+          message: |
             > **Warning**: TFC Docs changed [^1]
             >
             > This PR contains changes to documentation files that originate from [terraform-docs-common](https://github.com/hashicorp/terraform-docs-common).
