@@ -49,4 +49,4 @@ jobs:
             >
             > If necessary reversions were already made, feel free to ignore this comment.
             >
-            [^1]: For details on this particular workflow, see [$GITHUB_WORKFLOW]($GITHUB_WORKFLOW)
+            [^1]: For details on this particular workflow, see [${{github.workflow}}](${{github.workflow}})
