@@ -1,5 +1,5 @@
 # name: LEAVE NAME BLANK. This allows for easy linking to **this** workflow
-#       file with: ${{github.server_url}}/${{github.repository}}/${{github.workflow}}
+#       file with: ${{github.server_url}}/${{github.repository}}/blob/main/${{github.workflow}}
 on:
   pull_request:
     types:
@@ -51,4 +51,4 @@ jobs:
             >
             > If necessary reversions were already made, feel free to ignore this comment.
             >
-            [^1]: For details on this particular workflow, see [${{github.workflow}}](${{github.server_url}}/${{github.repository}}/${{github.workflow}})
+            [^1]: For details on this particular workflow, see [${{github.workflow}}](${{github.server_url}}/${{github.repository}}/blob/main/${{github.workflow}})
