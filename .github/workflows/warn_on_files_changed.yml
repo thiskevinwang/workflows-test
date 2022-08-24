@@ -39,7 +39,7 @@ jobs:
   post-pr-warning:
     runs-on: ubuntu-latest
     needs: [check-for-tfc-docs-changes]
-    if: always() && ${{ steps.check-for-tfc-docs-changes.result }} == "failure"
+    if: always() && ${{ needs.check-for-tfc-docs-changes.result }} == "failure"
     steps:
       - name: Echo if failed
         run: |
