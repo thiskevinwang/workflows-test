@@ -1,3 +1,11 @@
+# There are a number of documentation files in this repository
+# that originate from `terraform-docs-common` and are copied
+# into this repository at APP_DEADLINE.
+#
+# To avoid drift between the two repositories, we will warn
+# if a PR contains # modifications to any of these particular
+# files.
+
 # name: LEAVE NAME BLANK. This allows for easy linking to **this** workflow
 #       file with: ${{github.server_url}}/${{github.repository}}/blob/main/${{github.workflow}}
 on:
@@ -25,11 +33,10 @@ jobs:
             # -q is for quiet mode
 
             # This line allows us to ignore grep's `exit 1` on no matches.
-            matches=$(cat $file | { grep -Eq 'tfc_only:\s+true' || true; })
+            matches=$(cat $file | { grep -Eq 'source:\s+terraform-docs-common' || true; })
 
             # if matches length > 0, then the file contains the string
             if [ ${#matches} -gt 0 ]; then
-                echo "::set-output name=should_warn::1"
                 exit 1
             fi
           done
@@ -49,14 +56,13 @@ jobs:
           message: |
             > **Warning**: TFC Docs changed [^1]
             >
-            > This PR contains changes to documentation files that originate from [terraform-docs-common](https://github.com/hashicorp/terraform-docs-common).
-            > These files contain a frontmatter field, `tfc_only: true`.
+            > This PR contains changes to documentation files from the [`terraform-docs-common` repository](https://github.com/hashicorp/terraform-docs-common).
+            > These files contain a frontmatter field, `source: terraform-docs-common`, and they are automatically copied into this repository at app deadline. Refer to the [README](https://github.com/hashicorp/ptfe-releases#maintaining-tfe-website-documentation) for details.
             >
-            > These files are not meant to be edited directly.
+            > - TFE releases: Do not edit files with the `source: terraform-docs-common` header. Instead, change these files in the `terraform-docs-common` repository before app deadline.
             >
-            > Any modifications should ideally be made in [terraform-docs-common](https://github.com/hashicorp/terraform-docs-common).
-            > If they absolutely must be made here, please make sure to open an equivalent PR in the original repository.
+            > - TFE patches: You may need to edit files with the `source: terraform-docs-common` header so that your documentation changes appear in the patch release. If you edit these files, you must also open a pull request with the same changes in the [`terraform-docs-common` repository](https://github.com/hashicorp/terraform-docs-common).
             >
-            > If necessary reversions were already made, feel free to ignore this comment.
+            > Ignore this comment if you already reversed these changes.
             >
-            [^1]: For details on this particular workflow, see [${{github.workflow}}](${{github.server_url}}/${{github.repository}}/blob/main/${{github.workflow}})
+            [^1]: For details on this workflow, refer to [${{github.workflow}}](${{github.server_url}}/${{github.repository}}/blob/main/${{github.workflow}})
