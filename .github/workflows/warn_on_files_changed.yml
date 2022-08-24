@@ -37,8 +37,12 @@ jobs:
   post-pr-warning:
     runs-on: ubuntu-latest
     needs: [check-for-tfc-docs-changes]
-    if: needs.check-for-tfc-docs-changes.outputs.should_warn == 1
     steps:
+      # Don't warn if we don't need to
+      - run: |
+          if [ "${{ steps.check-for-tfc-docs-changes.outputs.should_warn }}" != "1" ]; then
+            exit 0
+          fi
       - name: Echo if failed
         run: |
           echo "::warning::TFC Docs changed"
