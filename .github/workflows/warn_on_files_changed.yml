@@ -19,18 +19,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      # Do not `exit 1` — we don't want to report failed checks.
       - run: |
           for file in $(gh pr view ${{ github.event.number }} --json files -q '.files[].path'); do
             # -E is for extended pattern matching
             # -q is for quiet mode
-            grep -Eq 'tfc_only:\s+true' $file;
 
-            # if grep returns 0, then the file contains the string
-            if [ $? -eq 0 ]; then
+            # This line allows us to ignore grep's `exit 1` on no matches.
+            matches=$(cat $file | { grep -Eq 'tfc_only:\s+true' || true; })
+
+            # if matches length > 0, then the file contains the string
+            if [ ${#matches} -gt 0 ]; then
                 echo "::set-output name=should_warn::1"
-            else 
-                exit 0
+                exit 1
             fi
           done
         env:
@@ -39,12 +39,8 @@ jobs:
   post-pr-warning:
     runs-on: ubuntu-latest
     needs: [check-for-tfc-docs-changes]
+    if: always() && ${{ steps.check-for-tfc-docs-changes.result }} == "failure"
     steps:
-      # Don't warn if we don't need to
-      - run: |
-          if [ "${{ steps.check-for-tfc-docs-changes.outputs.should_warn }}" != "1" ]; then
-            exit 0
-          fi
       - name: Echo if failed
         run: |
           echo "::warning::TFC Docs changed"
