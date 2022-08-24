@@ -12,7 +12,17 @@ on:
       - "website/**"
 
 jobs:
+  skip-automated-prs:
+    runs-on: ubuntu-latest
+    # exit workflow if author is the `digital-content-events` GH APP
+    steps:
+      - run: |
+          if [ "${{ github.actor }}" == "digital-content-events" ]; then
+            echo "::warning::Skipping automated PRs"
+            exit 0
+          fi
   check-for-tfc-docs-changes:
+    needs: [skip-automated-prs]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -35,7 +45,8 @@ jobs:
     if: always() && needs.check-for-tfc-docs-changes.result == 'failure'
     steps:
       - name: Echo if failed
-        run: echo "TFC Docs changed"
+        run: |
+          echo "::warning::TFC Docs changed"
       - uses: marocchino/sticky-pull-request-comment@v2
         with:
           message: |
