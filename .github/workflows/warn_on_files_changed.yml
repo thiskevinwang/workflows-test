@@ -29,6 +29,8 @@ jobs:
             # if grep returns 0, then the file contains the string
             if [ $? -eq 0 ]; then
                 echo "::set-output name=should_warn::1"
+            else 
+                exit 0
             fi
           done
         env:
