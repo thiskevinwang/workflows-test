@@ -13,6 +13,8 @@ on:
 
 jobs:
   check-for-tfc-docs-changes:
+    # Do not check Automated PRs opened by the digital-content-events
+    # GH App. These are expected to modify TFC files.
     if: ${{github.actor}} != "digital-content-events"
     runs-on: ubuntu-latest
     steps:
@@ -30,7 +32,8 @@ jobs:
           done
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  run-if-failed:
+  # Post a PR comment if TFC files have been modified
+  post-pr-warning:
     runs-on: ubuntu-latest
     needs: [check-for-tfc-docs-changes]
     if: always() && needs.check-for-tfc-docs-changes.result == 'failure'
@@ -54,3 +57,4 @@ jobs:
             > If necessary reversions were already made, feel free to ignore this comment.
             >
             [^1]: For details on this particular workflow, see [${{github.workflow}}](${{github.server_url}}/${{github.repository}}/blob/main/${{github.workflow}})
+      - run: exit 0
