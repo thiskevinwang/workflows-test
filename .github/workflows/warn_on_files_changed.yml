@@ -1,11 +1,3 @@
-# There are a number of documentation files in this repository
-# that originate from `terraform-docs-common` and are copied
-# into this repository at APP_DEADLINE.
-#
-# To avoid drift between the two repositories, we will warn
-# if a PR contains # modifications to any of these particular
-# files.
-
 # name: LEAVE NAME BLANK. This allows for easy linking to **this** workflow
 #       file with: ${{github.server_url}}/${{github.repository}}/blob/main/${{github.workflow}}
 on:
@@ -46,7 +38,7 @@ jobs:
   post-pr-warning:
     runs-on: ubuntu-latest
     needs: [check-for-tfc-docs-changes]
-    if: always() && ${{ needs.check-for-tfc-docs-changes.result }} == "failure"
+    if: failure()
     steps:
       - name: Echo if failed
         run: |
@@ -54,7 +46,7 @@ jobs:
       - uses: marocchino/sticky-pull-request-comment@v2
         with:
           message: |
-            > **Warning**: TFC Docs changed [^1]
+            > **Warning**: TFC Docs Changed [^1]
             >
             > This PR contains changes to documentation files from the [`terraform-docs-common` repository](https://github.com/hashicorp/terraform-docs-common).
             > These files contain a frontmatter field, `source: terraform-docs-common`, and they are automatically copied into this repository at app deadline. Refer to the [README](https://github.com/hashicorp/ptfe-releases#maintaining-tfe-website-documentation) for details.
