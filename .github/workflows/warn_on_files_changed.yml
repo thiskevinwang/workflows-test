@@ -25,7 +25,7 @@ jobs:
             # -q is for quiet mode
 
             # This line allows us to ignore grep's `exit 1` on no matches.
-            matches=$(cat $file | { grep -Eq 'source:\s+terraform-docs-common' || true; })
+            matches=$(cat $file | { grep -E 'source:\s+terraform-docs-common' || true; })
 
             # if matches length > 0, then the file contains the string
             if [ ${#matches} -gt 0 ]; then
