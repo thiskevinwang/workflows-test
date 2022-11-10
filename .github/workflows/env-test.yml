@@ -1,0 +1,32 @@
+name: Testing env access
+
+on:
+  workflow_dispatch:
+    inputs:
+      environemnt:
+        type: choice
+        description: Environment
+        required: true
+        options:
+          - production
+          - staging
+
+jobs:
+  access-env:
+    runs-on: ubuntu-latest
+    env:
+      STAGING_URL: "https://staging.example.com"
+      PRODUCTION_URL: "https://production.example.com"
+    steps:
+      - name: Get environment
+        id: get-env
+        run: |
+          echo "ENVIRONMENT=${{ inputs.environment }}" >> $GITHUB_OUTPUT
+      - run: |
+          echo "### \`summary\`"                                                >> $GITHUB_STEP_SUMMARY
+          echo ""                                                               >> $GITHUB_STEP_SUMMARY
+          echo "**env.STAGING_URL**: ${{env.STAGING_URL}}"                      >> $GITHUB_STEP_SUMMARY
+          echo "**env.PRODUCTION_URL**: ${{env.PRODUCTION_URL}}"                >> $GITHUB_STEP_SUMMARY
+          echo ""                                                               >> $GITHUB_STEP_SUMMARY
+          echo "**URL**: ${{ env[format('{0}_URL', steps.get-env.outputs.ENVIRONMENT)] }}" >> $GITHUB_STEP_SUMMARY
+          echo "**KEY**: ${{ format('{0}_URL', steps.get-env.outputs.ENVIRONMENT) }}" >> $GITHUB_STEP_SUMMARY
