@@ -28,5 +28,6 @@ jobs:
           echo "**env.STAGING_URL**: ${{env.STAGING_URL}}"                      >> $GITHUB_STEP_SUMMARY
           echo "**env.PRODUCTION_URL**: ${{env.PRODUCTION_URL}}"                >> $GITHUB_STEP_SUMMARY
           echo ""                                                               >> $GITHUB_STEP_SUMMARY
+          echo "**steps.get-env.outputs.ENVIRONMENT**: ${{steps.get-env.outputs.ENVIRONMENT}}" >> $GITHUB_STEP_SUMMARY
           echo "**URL**: ${{ env[format('{0}_URL', steps.get-env.outputs.ENVIRONMENT)] }}" >> $GITHUB_STEP_SUMMARY
           echo "**KEY**: ${{ format('{0}_URL', steps.get-env.outputs.ENVIRONMENT) }}" >> $GITHUB_STEP_SUMMARY
