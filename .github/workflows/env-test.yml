@@ -1,9 +1,10 @@
 name: Testing env access
+run-name: "Testing env access: ${{ inputs.environment }}"
 
 on:
   workflow_dispatch:
     inputs:
-      environemnt:
+      environment:
         type: choice
         description: Environment
         required: true
