@@ -21,8 +21,10 @@ jobs:
     steps:
       - name: Get environment
         id: get-env
+        # convert inputs.environment to all-caps
         run: |
-          echo "ENVIRONMENT=${{ inputs.environment }}" >> $GITHUB_OUTPUT
+          echo "ENVIRONMENT=$(echo ${{ inputs.environment }} | tr 'a-z' 'A-Z')" >> $GITHUB_OUTPUT
+      # https://docs.github.com/en/actions/learn-github-actions/expressions#format
       - run: |
           echo "### \`summary\`"                                                >> $GITHUB_STEP_SUMMARY
           echo ""                                                               >> $GITHUB_STEP_SUMMARY
