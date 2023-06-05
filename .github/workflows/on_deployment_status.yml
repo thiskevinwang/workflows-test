@@ -7,7 +7,8 @@ on:
 jobs:
   on-deploy:
     runs-on: ubuntu-latest
-    if: contains(fromJSON('["failure","success", "waiting"]'), github.event.deployment_status.state)
+    # if: contains(fromJSON('["failure","success", "waiting"]'), github.event.deployment_status.state)
+    if: github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'production'
     steps:
       - name: "${{ github.event_name }}"
         run: echo '${{ toJSON(github) }}'
