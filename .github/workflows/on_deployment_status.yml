@@ -8,7 +8,7 @@ jobs:
   on-deploy:
     runs-on: ubuntu-latest
     # if: contains(fromJSON('["failure","success", "waiting"]'), github.event.deployment_status.state)
-    if: github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'production' && github.event.sender.id == 35613825 && contains(github.event.deployment_status.target_url, 'workflows-test')
+    if: github.event.deployment_status.state == 'success' && contains(github.event.deployment.environment, 'production') && github.event.sender.id == 35613825 && contains(github.event.deployment_status.target_url, 'workflows-test')
     steps:
       - name: "${{ github.event_name }}"
         run: echo '${{ toJSON(github) }}'
